@@ -1,0 +1,343 @@
+{
+  "schema_version": 1,
+  "mode": "architecture",
+  "template_type": "architecture",
+  "style": 1,
+  "quality_profile": "showcase",
+  "text_policy": "strict",
+  "width": 1280,
+  "height": 820,
+  "title": "语义通信驱动的多智能体协同感知：系统架构",
+  "subtitle": "发送端选什么、怎么编码 → 无线信道 → 接收端解码、对齐、融合 → 任务输出；接收方需求反向指导选择",
+  "containers": [
+    {
+      "id": "sender",
+      "x": 40,
+      "y": 100,
+      "width": 1200,
+      "height": 130,
+      "label": "① 发送端智能体（协作车 / 路侧单元 / 无人机）"
+    },
+    {
+      "id": "link",
+      "x": 40,
+      "y": 280,
+      "width": 1200,
+      "height": 132,
+      "label": "② 无线信道与网络（V2V / V2I / V2X）"
+    },
+    {
+      "id": "receiver",
+      "x": 40,
+      "y": 460,
+      "width": 1200,
+      "height": 246,
+      "label": "③ 接收端智能体（本车 Ego）"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "s-sensor",
+      "kind": "rect",
+      "x": 60,
+      "y": 144,
+      "width": 230,
+      "height": 64,
+      "label": "传感器观测",
+      "sublabel": "LiDAR 点云 / 相机图像",
+      "fill": "#f8fafc",
+      "stroke": "#94a3b8",
+      "flat": true
+    },
+    {
+      "id": "s-encoder",
+      "kind": "rect",
+      "x": 360,
+      "y": 144,
+      "width": 230,
+      "height": 64,
+      "label": "特征提取 · BEV 表示",
+      "sublabel": "PointPillars 等骨干",
+      "fill": "#fff7ed",
+      "stroke": "#f97316",
+      "flat": true
+    },
+    {
+      "id": "s-select",
+      "kind": "double_rect",
+      "x": 660,
+      "y": 144,
+      "width": 230,
+      "height": 64,
+      "label": "语义选择：传什么",
+      "sublabel": "Where2comm 置信图 · What2comm",
+      "fill": "#fff7ed",
+      "stroke": "#f97316",
+      "flat": true
+    },
+    {
+      "id": "s-semenc",
+      "kind": "double_rect",
+      "x": 960,
+      "y": 144,
+      "width": 230,
+      "height": 64,
+      "label": "语义编码：怎么传",
+      "sublabel": "码本 VQ · 信息瓶颈 · JSCC",
+      "fill": "#faf5ff",
+      "stroke": "#8b5cf6",
+      "flat": true
+    },
+    {
+      "id": "l-demand",
+      "kind": "rect",
+      "x": 660,
+      "y": 324,
+      "width": 230,
+      "height": 64,
+      "label": "接收方需求反馈",
+      "sublabel": "请求图 · Who2com 选协作者",
+      "fill": "#fef2f2",
+      "stroke": "#ef4444",
+      "flat": true
+    },
+    {
+      "id": "l-channel",
+      "kind": "rect",
+      "x": 960,
+      "y": 324,
+      "width": 230,
+      "height": 64,
+      "label": "无线信道 / V2X 链路",
+      "sublabel": "带宽 · 衰落噪声 · 丢包 · 时延",
+      "fill": "#f0fdf4",
+      "stroke": "#22c55e",
+      "flat": true
+    },
+    {
+      "id": "r-task",
+      "kind": "rect",
+      "x": 60,
+      "y": 506,
+      "width": 230,
+      "height": 64,
+      "label": "下游任务输出",
+      "sublabel": "3D 检测 · BEV 分割 · 跟踪",
+      "fill": "#eff6ff",
+      "stroke": "#3b82f6",
+      "flat": true
+    },
+    {
+      "id": "r-fuse",
+      "kind": "double_rect",
+      "x": 360,
+      "y": 506,
+      "width": 230,
+      "height": 64,
+      "label": "协同融合",
+      "sublabel": "注意力 · V2X-ViT · HEAL 异构",
+      "fill": "#eff6ff",
+      "stroke": "#3b82f6",
+      "flat": true
+    },
+    {
+      "id": "r-align",
+      "kind": "rect",
+      "x": 660,
+      "y": 506,
+      "width": 230,
+      "height": 64,
+      "label": "时空对齐",
+      "sublabel": "CoAlign 位姿纠正 · 时延补偿",
+      "fill": "#eff6ff",
+      "stroke": "#3b82f6",
+      "flat": true
+    },
+    {
+      "id": "r-decoder",
+      "kind": "rect",
+      "x": 960,
+      "y": 506,
+      "width": 230,
+      "height": 64,
+      "label": "语义解码",
+      "sublabel": "码本查表 · JSCC 解码器",
+      "fill": "#faf5ff",
+      "stroke": "#8b5cf6",
+      "flat": true
+    },
+    {
+      "id": "r-eval",
+      "kind": "rect",
+      "x": 60,
+      "y": 620,
+      "width": 230,
+      "height": 64,
+      "label": "评价指标",
+      "sublabel": "AP–字节曲线 · 时延 · AoI",
+      "fill": "#f8fafc",
+      "stroke": "#94a3b8",
+      "flat": true
+    },
+    {
+      "id": "r-ego",
+      "kind": "rect",
+      "x": 360,
+      "y": 620,
+      "width": 230,
+      "height": 64,
+      "label": "本车感知特征",
+      "sublabel": "本地观测 → BEV 特征",
+      "fill": "#f8fafc",
+      "stroke": "#94a3b8",
+      "flat": true
+    }
+  ],
+  "arrows": [
+    {
+      "id": "e-sense",
+      "source": "s-sensor",
+      "target": "s-encoder",
+      "source_port": "right",
+      "target_port": "left",
+      "flow": "data",
+      "label": "观测"
+    },
+    {
+      "id": "e-feat",
+      "source": "s-encoder",
+      "target": "s-select",
+      "source_port": "right",
+      "target_port": "left",
+      "flow": "data",
+      "label": "特征图"
+    },
+    {
+      "id": "e-sparse",
+      "source": "s-select",
+      "target": "s-semenc",
+      "source_port": "right",
+      "target_port": "left",
+      "flow": "data",
+      "label": "稀疏特征"
+    },
+    {
+      "id": "e-tx",
+      "source": "s-semenc",
+      "target": "l-channel",
+      "source_port": "bottom",
+      "target_port": "top",
+      "flow": "write",
+      "label": "信道符号"
+    },
+    {
+      "id": "e-rx",
+      "source": "l-channel",
+      "target": "r-decoder",
+      "source_port": "bottom",
+      "target_port": "top",
+      "flow": "write",
+      "label": "带噪接收"
+    },
+    {
+      "id": "e-dec",
+      "source": "r-decoder",
+      "target": "r-align",
+      "source_port": "left",
+      "target_port": "right",
+      "flow": "read",
+      "label": "协作特征"
+    },
+    {
+      "id": "e-align",
+      "source": "r-align",
+      "target": "r-fuse",
+      "source_port": "left",
+      "target_port": "right",
+      "flow": "read",
+      "label": "对齐特征"
+    },
+    {
+      "id": "e-out",
+      "source": "r-fuse",
+      "target": "r-task",
+      "source_port": "left",
+      "target_port": "right",
+      "flow": "read",
+      "label": "融合特征"
+    },
+    {
+      "id": "e-ego",
+      "source": "r-ego",
+      "target": "r-fuse",
+      "source_port": "top",
+      "target_port": "bottom",
+      "flow": "read",
+      "label": "本地"
+    },
+    {
+      "id": "e-eval",
+      "source": "r-task",
+      "target": "r-eval",
+      "source_port": "bottom",
+      "target_port": "top",
+      "flow": "neutral",
+      "label": "评估"
+    },
+    {
+      "id": "e-need",
+      "source": "r-fuse",
+      "target": "l-demand",
+      "source_port": "top",
+      "target_port": "left",
+      "flow": "feedback",
+      "dashed": true,
+      "label": "盲区需求",
+      "route_points": [
+        [
+          475,
+          356
+        ]
+      ]
+    },
+    {
+      "id": "e-req",
+      "source": "l-demand",
+      "target": "s-select",
+      "source_port": "top",
+      "target_port": "bottom",
+      "flow": "feedback",
+      "dashed": true,
+      "label": "请求"
+    }
+  ],
+  "legend_orientation": "horizontal",
+  "legend_x": 48,
+  "legend_y": 730,
+  "legend_locked": true,
+  "legend": [
+    {
+      "flow": "data",
+      "label": "发送端特征流"
+    },
+    {
+      "flow": "write",
+      "label": "无线传输"
+    },
+    {
+      "flow": "read",
+      "label": "接收端处理流"
+    },
+    {
+      "flow": "feedback",
+      "label": "需求反馈"
+    },
+    {
+      "flow": "neutral",
+      "label": "评估"
+    }
+  ],
+  "footer": "依据 chapters/01–03 调研内容整理 · 截至 2026-10-31",
+  "footer_x": 48,
+  "footer_y": 788
+}

@@ -3,6 +3,12 @@
 > 面向刚入门的研究生，梳理「语义通信 / 任务导向通信」视角下的多智能体协同感知（车车 V2V、车路 V2I/V2X、无人机群）。
 > 资料截至 **2026-10-31**。各章由 GPT-6 Astra 子 agent 联网调研撰写，主 agent 负责汇总和抽查；未能核实的条目在正文中标注为「待核实」。
 
+## 系统架构总览
+
+![语义通信驱动的多智能体协同感知系统架构](figures/architecture.png)
+
+一条完整链路分三层：**发送端**决定传什么（语义选择）和怎么传（语义编码）→ **无线信道**带来带宽限制、噪声、丢包和时延 → **接收端**解码、做时空对齐，再和本车特征融合，输出检测、分割或跟踪结果。红色虚线表示接收方把自己的盲区需求反馈给发送端，用来指导下一轮的选择。图的源文件是 [architecture.json](figures/architecture.json)，矢量图是 [architecture.svg](figures/architecture.svg)。
+
 ## 目录
 
 | 章节 | 内容 | 适合谁 |
@@ -28,8 +34,13 @@
 .
 ├── README.md                 # 本文件：总览与导航
 ├── chapters/                 # 各章调研正文（Markdown）
+├── figures/
+│   ├── architecture.json     # 架构图源文件（fireworks-tech-graph，Style 1）
+│   ├── architecture.svg      # 矢量图
+│   └── architecture.png      # 2560×1640 位图
 └── scripts/
-    └── extract_chapters.py   # 从子 agent 工作流输出中提取章节的辅助脚本
+    ├── extract_chapters.py   # 从子 agent 工作流输出中提取章节的辅助脚本
+    └── fix_svg_fonts.py      # 把 SVG 字体改为中文优先，避免导出 PNG 时中文变方框
 ```
 
 ## 使用说明与免责声明
